@@ -7,6 +7,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+import xpath
+
 
 # Your profile path
 profile_path = 'C:/Users/nmozol/AppData/Local/Google/Chrome/User Data/Default'
@@ -50,12 +52,7 @@ i=0
 # Clicking the button to load more reviews
 while True:
     try:
-        # Find the button and click
-        next_button = driver.find_element(By.XPATH, '//i[contains(text(), "navigate_next")]')
-        driver.execute_script("arguments[0].click();", next_button)
-        time.sleep(3)  # Wait for the reviews to load
-      
-
+       
         # Get page source and parse it
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         # Get all review containers
@@ -65,20 +62,59 @@ while True:
 
         # Extract data from each container
         for container in containers:
+            # try:
+            #     # If the "More" button is found, click it
+            #     more_button = container.find('a', jsname_='lOwe6b')
+            #     driver.execute_script("arguments[0].click();", more_button)
+            #     time.sleep(1)  # Wait for the text to expand
+            # except NoSuchElementException:
+            #     # If the "More" button is not found, continue without clicking
+            #     pass
+
             adress = container.find('span', class_='ijHgsc').text
             name = container.find('a', class_='bFubHb').text
             date_review = container.find('span', class_='Wxf3Bf wUfJz').text
-            #rating = container.find('span', class_='ODSEW-ShBeI-H1e3jb').get('aria-label')
-            #review_text = container.find('span', class_='DT6Wnd').text
+            rating = container.find_all('span', class_='DPvwYc L12a3c z3FsAc')
+            rating=len(rating)
+            
+            try:
+                review_text = container.find('span', class_='oiQd1c').text
+            except:
+                review_text=''
+
+
+            user_url=container.find('a', class_='bFubHb').attrs['href']
+            try:
+                replay_time=container.find('span', class_='Wxf3Bf Gjqk4b').text
+            except:
+                replay_time=''
 
             code_filia = container.find('span', class_='mjZtse wjs4p').text
             i=code_filia.find(':')
             code_filia=code_filia[i+1:]
 
+            try:
+                reply_text = container.find('div', class_='DT6Wnd').text
+            except:
+                reply_text=''
+            
+            reviews.append({'date_review': date_review
+                            ,'code_filia': code_filia
+                            ,'adress':adress
+                            ,'name': name
+                            ,'user_url':user_url
+                            ,'review_text':review_text
+                            ,'replay_time':replay_time
+                            ,'reply_text':reply_text
+                            ,'rating':rating})
 
-            answer_text = container.find('div', class_='DT6Wnd')
-            reviews.append({'adress':adress, 'name': name, 'date_review': date_review, 'code_filia': code_filia, 'answer_text':answer_text})
-        break
+
+
+        # Find the button and click
+        next_button = driver.find_element(By.XPATH, '//i[contains(text(), "navigate_next")]')
+        driver.execute_script("arguments[0].click();", next_button)
+        time.sleep(3)  # Wait for the reviews to load
+        
     except NoSuchElementException:
         # If the button is not found on the page, break the loop
         break
@@ -92,6 +128,6 @@ driver.close()
 df = pd.DataFrame(reviews)
 
 # Save to csv
-df.to_csv('./reviews.csv', index=False, sep='|')
+df.to_csv('./reviews.csv', index=False, sep='\t', encoding='utf-16')
 
 print('Reviews are saved.')
