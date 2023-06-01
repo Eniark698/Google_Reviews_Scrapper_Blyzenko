@@ -5,10 +5,14 @@ from selenium.webdriver.common.by import By
 #from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+import numpy as np
 import pandas as pd
 import time
 import xpath
 import dateparser
+import pyodbc
+#cnxn = pyodbc.connect('DRIVER={Devart ODBC Driver for SQL Server};Server=bi_blyzenko2;Database=bi_blyzenko;Port=myport;User ID=myuserid;Password=mypassword')
+
 
 # Your profile path
 profile_path = 'C:/Users/nmozol/AppData/Local/Google/Chrome/User Data/Default'
@@ -113,20 +117,16 @@ while True:
                         ,'replay_time':replay_time
                         ,'reply_text':reply_text
                         ,'rating':rating})
-
-    # try:
-    #     button=soup.find_all('button', class_='VfPpkd-Bz112c-LgbsSe yHy1rc eT1oJ QDwDD mN1ivc vX5N7b').attrs['disabled']
-    #     break
-    # except:
-    #     pass
-    # Find the button and click
-    # if j>=5:
-    #     break
     try:
-        next_button = driver.find_element(By.XPATH, '//i[contains(text(), "navigate_next")]')
-        driver.execute_script("arguments[0].click();", next_button)
-    except:
+        button_check=soup.find('button', class_="VfPpkd-Bz112c-LgbsSe yHy1rc eT1oJ QDwDD mN1ivc vX5N7b").attrs['disabled']
         break
+    except:
+        pass
+    
+   
+    next_button = driver.find_element(By.XPATH, '//i[contains(text(), "navigate_next")]')
+    driver.execute_script("arguments[0].click();", next_button)
+
     time.sleep(3)  # Wait for the reviews to load
     
 time.sleep(3)
