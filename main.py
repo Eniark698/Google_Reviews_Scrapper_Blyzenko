@@ -15,6 +15,10 @@ import pyodbc
 from traceback import format_exc
 import os
 
+from warnings import filterwarnings
+filterwarnings("ignore")
+
+
 # get the current working directory
 current_working_directory = os.getcwd()
 
@@ -208,10 +212,10 @@ try:
 
     print('Reviews are saved.')
 except:
-        f=open(current_working_directory + 'log.txt', 'a')
+        f=open(current_working_directory + '/log.txt', 'a')
         f.write('----------------------------------------\n')
         f.write(format_exc())
         f.write('\nstopped on : '+ str(j) + '  th page\n')
-        f.write('occurred on ' + str(datetime.now())+ '\n')
+        f.write('occurred on ' + str(datetime.datetime.now())+ '\n')
         f.write('----------------------------------------\n\n\n')
         f.close()
