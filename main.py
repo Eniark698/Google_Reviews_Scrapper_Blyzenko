@@ -44,7 +44,7 @@ try:
     #cnxn.setencoding('latin1')
 
     # Your profile path
-    profile_path = 'C:/Users/nmozol/AppData/Local/Google/Chrome/User Data/Default'
+    profile_path = 'C:/Users/nmozol/AppData/Local/Google/Chrome/User Data/Profile 1'
 
     # Setup selenium webdriver with a profile
     options = Options()
