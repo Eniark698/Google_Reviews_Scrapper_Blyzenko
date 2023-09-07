@@ -175,7 +175,7 @@ try:
   
 
     #clearing table
-    cursor.execute("delete from {}.{}.[dbo].[Google_Review_Scrapping];".format(server,database))
+    cursor.execute("delete from {}.[dbo].[Google_Review_Scrapping];".format(database))
     cnxn.commit()
 
 
@@ -242,8 +242,8 @@ try:
             #                 ,'rating':rating})
             
             
-            insert_statement="""INSERT INTO {}.{}.[dbo].[Google_Review_Scrapping] 
-            VALUES (?,?,?,?,?,?,?,?,?)""".format(server,database)
+            insert_statement="""INSERT INTO {}.[dbo].[Google_Review_Scrapping] 
+            VALUES (?,?,?,?,?,?,?,?,?)""".format(database)
             
             # print((
             #     date_review
