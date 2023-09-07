@@ -1,2 +1,5 @@
 venv/
 secrets_file.py
+log.txt
+__pycache__/
+log_err.txt
