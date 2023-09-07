@@ -38,8 +38,8 @@ try:
 
 
     #connect to sql server
-    driver='SQL Server'
-    cnxn = pyodbc.connect('DRIVER={};Server={};Database={};Port={};User ID={};Password={}'.format(driver,server,database,port,user,password))
+    driver='ODBC driver 17 for SQL Server'
+    cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}')
     cursor = cnxn.cursor()
 
     #cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='latin1')
