@@ -56,8 +56,8 @@ try:
     options.add_argument("--disable-plugins-discovery")
     options.add_argument("--start-maximized")
     #options.add_argument("--incognito")
-    options.add_argument("--headless")
-    #options.add_argument("user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
+    #options.add_argument("--headless")
+    options.add_argument("user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
 
     #s=Service(ChromeDriverManager().install())
     
@@ -88,18 +88,18 @@ try:
 
     try:
         # Enter login
-        email_input = driver.find_element(By.XPATH, '//*[@type="email"]')
+        email_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input')
         email_input.send_keys(login)
-        next_button = driver.find_element(By.XPATH, '//*[@id="identifierNext"]')
+        next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button')
         next_button.click()
 
         # Wait for the password input to become available
-        time.sleep(10)
+        time.sleep(20)
 
         # Enter password
-        password_input = driver.find_element(By.XPATH, '//*[@type="password"]')
+        password_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input')
         password_input.send_keys(passw)
-        next_button = driver.find_element(By.XPATH, '//*[@id="passwordNext"]')
+        next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button')
         next_button.click()
 
 
@@ -107,7 +107,7 @@ try:
 
         # Assuming at this point the 2-factor authentication might kick in.
         # Wait for a short while for it to be presented, or any other form of 2FA your account has set up
-        time.sleep(10)
+        time.sleep(20)
 
         # Check if phone number input is present
         try:
@@ -125,7 +125,7 @@ try:
                 # Handle the exception (e.g., checkbox not found)
                 print("Checkbox not found")
 
-            phone_number_input = driver.find_element(By.XPATH, '//*[@type="tel"]') # Adjust the XPath based on the actual element
+            phone_number_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[2]/div/div[2]/div[1]/label/input') # Adjust the XPath based on the actual element
             phone_number_input.send_keys(number)
             next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button') # Adjust the XPath based on the actual button
             next_button.click()
@@ -156,7 +156,8 @@ try:
         f=open(current_working_directory + '/log.txt', 'a')
         f.write('----------------------------------------\n')
         f.write('no logging necessary\n')
-        f.write('occurred on ' + str(datetime.datetime.now())+ '\n')
+        f.write(format_exc())
+        f.write('\noccurred on ' + str(datetime.datetime.now())+ '\n')
         f.write('----------------------------------------\n\n\n')
         f.close()
     else:
