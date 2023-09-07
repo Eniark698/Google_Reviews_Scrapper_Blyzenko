@@ -168,6 +168,7 @@ try:
         f.write('----------------------------------------\n\n\n')
         f.close()
     # Wait until page is loaded
+    print('entered')
     time.sleep(40)
 
     # Define list to store reviews data
