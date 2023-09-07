@@ -46,11 +46,11 @@ try:
     #cnxn.setencoding('latin1')
 
     # Your profile path
-    profile_path = '/home/administartor/.config/google-chrome/default'
+    #profile_path = '/home/administartor/.config/google-chrome/default'
 
     # Setup selenium webdriver with a profile
     options = Options()
-    options.add_argument(f'user-data-dir={profile_path}')
+    options.add_argument('--profile-directory=Default')
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-plugins-discovery")
