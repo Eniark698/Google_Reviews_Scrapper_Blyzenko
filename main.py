@@ -46,17 +46,17 @@ try:
     #cnxn.setencoding('latin1')
 
     # Your profile path
-    #profile_path = '/home/administartor/.config/google-chrome/default'
+    profile_path = '/home/administartor/.config/google-chrome/default'
 
     # Setup selenium webdriver with a profile
     options = Options()
-    #options.add_argument(f'user-data-dir={profile_path}')
+    options.add_argument(f'user-data-dir={profile_path}')
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-extensions")
     options.add_argument("--disable-plugins-discovery")
     options.add_argument("--start-maximized")
-    options.add_argument("--incognito")
-    #options.add_argument("--headless")
+    #options.add_argument("--incognito")
+    options.add_argument("--headless")
     #options.add_argument("user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
 
     #s=Service(ChromeDriverManager().install())
