@@ -42,15 +42,11 @@ try:
     cnxn = pyodbc.connect(f'DRIVER={driver};SERVER={server};DATABASE={database};UID={user};PWD={password}')
     cursor = cnxn.cursor()
 
-    #cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='latin1')
-    #cnxn.setencoding('latin1')
+
     # Your profile path
     profile_directory = current_working_directory  +  "/profile_dir"  # Change this to your directory path
     if not os.path.exists(profile_directory):
         os.makedirs(profile_directory)
-
-    # Your profile path
-    #profile_path = '~/.config/google-chrome/default'
 
     # Setup selenium webdriver with a profile
     options = Options()
@@ -78,18 +74,11 @@ try:
     # Target URL
     url = 'https://business.google.com/u/0/groups/113213648489666118794/reviews'  # Fill the URL of the Google Reviews
     driver.get(url)
-    # driver.find_element(By.XPATH , '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input').send_keys(login)
-    # driver.find_element(By.CLASS_NAME , 'VfPpkd-vQzf8d').click()
-    # time.sleep(10)
-    # driver.find_element(By.CLASS_NAME , 'pp').sendKeys(passw)
-    # driver.find_element(By.XPATH , 'VfPpkd-vQzf8d').click()
 
-    # # Accept the cookies
+
+    # Just wait
     time.sleep(3)
-    # try:
-    #     driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[4]/form/div[1]/div/button/span').click()
-    # except Exception:
-    #    pass
+
 
     try:
         # Enter login
@@ -158,6 +147,7 @@ try:
         except Exception as e:
             print(f"2FA input not found or another error occurred: {str(e)}")
     except:
+        #write in file, if login was no necessary
         f=open(current_working_directory + '/log.txt', 'a')
         f.write('----------------------------------------\n')
         f.write('no logging necessary\n')
@@ -166,6 +156,7 @@ try:
         f.write('----------------------------------------\n\n\n')
         f.close()
     else:
+        #write in file, if login was necessary
         f=open(current_working_directory + '/log.txt', 'a')
         f.write('----------------------------------------\n')
         f.write('login\n')
@@ -175,10 +166,9 @@ try:
     # Wait until page is loaded
     print('entered')
     
-    time.sleep(40)
-    # Define list to store reviews data
 
-    #reviews = []
+    #wait for full implicite load
+    time.sleep(40)
   
 
     #clearing table
@@ -197,10 +187,10 @@ try:
         
 
 
-        # Extract data from each container
+        # Extract data from each container(comment)
         for container in containers:
             
-
+            
             adress = container.find('span', class_='ijHgsc').text
             name = container.find('a', class_='bFubHb').text
             date_review = container.find('span', class_='Wxf3Bf wUfJz').text
@@ -235,35 +225,18 @@ try:
                 reply_text=None
             
 
+            #parse dates
             date_review=dateparser.parse(date_review, languages=['uk'])
             date_review=date_review.strftime('%Y-%m-%d')
 
-            # reviews.append({'date_review': date_review
-            #                 ,'code_filia': code_filia
-            #                 ,'adress':adress
-            #                 ,'name': name
-            #                 ,'user_url':user_url
-            #                 ,'review_text':review_text
-            #                 ,'replay_time':replay_time
-            #                 ,'reply_text':reply_text
-            #                 ,'rating':rating})
-            
-            
+ 
+            #insert blueprint
             insert_statement="""INSERT INTO {}.[dbo].[Google_Review_Scrapping] 
             VALUES (?,?,?,?,?,?,?,?,?)""".format(database)
             
-            # print((
-            #     date_review
-            #     ,code_filia
-            #     ,adress
-            #     ,name
-            #     ,user_url
-            #     ,review_text
-            #     ,replay_time
-            #     ,reply_text
-            #     ,rating))
+        
             
-
+            #actual insert statement
             cursor.execute(insert_statement, (
                 date_review
                 ,code_filia
@@ -284,7 +257,7 @@ try:
         except:
             pass
         
-    #click on 'next' button
+        #click on 'next' button
         try:
             next_button = driver.find_element(By.XPATH, '//i[contains(text(), "navigate_next")]')
             driver.execute_script("arguments[0].click();", next_button)
@@ -301,13 +274,9 @@ try:
 
 
 
-    # Create dataframe
-    #df = pd.DataFrame(reviews)
 
-    # Save to csv
-    #df.to_csv('./reviews.csv', index=False, sep='\t', encoding='utf-16')
 
-    #print('Reviews are saved.')
+#if error then wirte a log file
 except:
         f=open(current_working_directory + '/log_err.txt', 'a')
         f.write('----------------------------------------\n')
