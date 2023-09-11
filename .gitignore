@@ -3,3 +3,4 @@ secrets_file.py
 log.txt
 __pycache__/
 log_err.txt
+profile_dir/

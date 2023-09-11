@@ -44,12 +44,17 @@ try:
 
     #cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='latin1')
     #cnxn.setencoding('latin1')
+    # Your profile path
+    profile_directory = current_working_directory  +  "/profile_dir"  # Change this to your directory path
+    if not os.path.exists(profile_directory):
+        os.makedirs(profile_directory)
 
     # Your profile path
-    #profile_path = '/home/administartor/.config/google-chrome/default'
+    #profile_path = '~/.config/google-chrome/default'
 
     # Setup selenium webdriver with a profile
     options = Options()
+    options.add_argument(f'--user-data-dir={profile_directory}') # Use the f-string to insert the directory path
     options.add_argument('--profile-directory=Default')
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-extensions")
@@ -169,8 +174,8 @@ try:
         f.close()
     # Wait until page is loaded
     print('entered')
+    
     time.sleep(40)
-
     # Define list to store reviews data
 
     #reviews = []
