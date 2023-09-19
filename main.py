@@ -271,6 +271,8 @@ try:
     #closing sql connection
     cnxn.close()
     driver.close()
+    f=open(current_working_directory + '/log.txt', 'a')
+    f.write('\n finished with code 0\n')
 
 
 
