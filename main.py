@@ -131,7 +131,7 @@ try:
 
             try:
                 # Locate the checkbox using its XPath (you would need to find the exact XPath from the browser's developer tools)
-                checkbox = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[3]/div[1]/div/div/div[1]/div/input')))
+                checkbox = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[3]/div[1]/div/div/div[1]/div/input')))
 
                 # Check the state of the checkbox
                 if not checkbox.is_selected():
@@ -141,10 +141,10 @@ try:
                 # Handle the exception (e.g., checkbox not found)
                 print("Checkbox not found")
 
-            two_factor_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[2]/div/div[1]/div/div[1]/input') # Adjust the XPath based on the actual 2FA element
+            two_factor_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[2]/div/div[1]/div/div[1]/input') # Adjust the XPath based on the actual 2FA element
             two_factor_code = input("Please enter your 2-factor authentication code from SMS: ")
             two_factor_input.send_keys(two_factor_code)
-            next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button') # Adjust the XPath based on the actual button
+            next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div[2]/div[1]/div/div/button') # Adjust the XPath based on the actual button
             next_button.click()
         except Exception as e:
             print(f"2FA input not found or another error occurred: {str(e)}")
