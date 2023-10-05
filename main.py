@@ -123,7 +123,7 @@ try:
 
             phone_number_input = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[3]/div/div/div[2]/div/div[2]/div[1]/label/input') # Adjust the XPath based on the actual element
             phone_number_input.send_keys(number)
-            next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div/button') # Adjust the XPath based on the actual button
+            next_button = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button') # Adjust the XPath based on the actual button
             next_button.click()
             
             # Now wait for the code input
