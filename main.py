@@ -217,7 +217,10 @@ try:
 
             code_filia = container.find('span', class_='mjZtse wjs4p').text
             i=code_filia.find(':')
-            code_filia=int(code_filia[i+1:].replace(" ", ""))
+            try:
+                code_filia=int(code_filia[i+1:].replace(" ", ""))
+            except:
+                code_filia=None
 
 
             try:
